@@ -20,6 +20,15 @@
         }
       },
       {
+        "package": "SwiftyTextTable",
+        "repositoryURL": "https://github.com/LockedGear/SwiftyTextTable",
+        "state": {
+          "branch": "0.9.5",
+          "revision": "3d715998196c7840be716654bc5aa4c3b9da6c98",
+          "version": null
+        }
+      },
+      {
         "package": "ZIPFoundation",
         "repositoryURL": "https://github.com/weichsel/ZIPFoundation",
         "state": {

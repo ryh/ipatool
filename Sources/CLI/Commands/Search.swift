@@ -9,6 +9,7 @@ import ArgumentParser
 import Foundation
 import Networking
 import StoreAPI
+import SwiftyTextTable
 
 struct Search: AsyncParsableCommand {
     static var configuration: CommandConfiguration {
@@ -70,13 +71,26 @@ extension Search {
     mutating func run() async throws {
         // Search the iTunes store
         let results = await results(with: term)
-
+        var table = printTable(style: .none)
         // Compile output
-        let output = results
+        let _ = results
             .enumerated()
-            .map({ "\($0 + 1). \($1.name): \($1.bundleIdentifier) (\($1.version))." })
+            .map({
+                table.addRow(values:[$1.identifier, $1.name, $1.bundleIdentifier, $1.version, $1.url.components(separatedBy: "?")[0]])
+                return "\($1.identifier). \($1.name): \($1.bundleIdentifier) (\($1.version))."
+                })
             .joined(separator: "\n")
+        //TODO: user define style?
+        print(table.render())
 
-        logger.log("Found \(results.count) \(results.count == 1 ? "result" : "results"):\n\(output)", level: .info)
     }
 }
+public func printTable(style:TextTableStyle = .none) -> TextTable {
+    let c1 = TextTableColumn(header: "id", color:.green)
+    let c2 = TextTableColumn(header: "name", color:.blue)
+    let c3 = TextTableColumn(header: "bundleIdentifier", color:.green)
+    let c4 = TextTableColumn(header: "version", color:.blue)
+    let c5 = TextTableColumn(header: "url", color:.blue)
+    let table = TextTable(columns: [c1, c2, c3, c4, c5],style: style)
+    return table
+  }

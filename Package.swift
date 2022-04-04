@@ -14,12 +14,14 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", revision: "1.0.2"),
         .package(url: "https://github.com/weichsel/ZIPFoundation", revision: "0.9.14"),
-        .package(url: "https://github.com/kishikawakatsumi/KeychainAccess", revision: "v4.2.2")
+        .package(url: "https://github.com/kishikawakatsumi/KeychainAccess", revision: "v4.2.2"),
+        .package(url: "https://github.com/LockedGear/SwiftyTextTable", revision: "0.9.5")
     ],
     targets: [
         .executableTarget(
             name: "CLI",
             dependencies: [
+                .product(name: "SwiftyTextTable", package: "SwiftyTextTable"),
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 .byName(name: "Networking"),
                 .byName(name: "StoreAPI"),
